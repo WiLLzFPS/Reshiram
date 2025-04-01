@@ -1,6 +1,5 @@
 # Discord bot token file
-Reshiram/discord-bot/src/config/token.py
-
+discord-bot/src/config/token.py
 # Ignore virtual environment directory
 Reshiram/
 
