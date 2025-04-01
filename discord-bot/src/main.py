@@ -1,4 +1,4 @@
-import discord
+import discord # type: ignore
 from config.token import TOKEN
 
 # Creates a client connection to Discord
