@@ -1,6 +1,7 @@
 from dotenv import load_dotenv  # type: ignore
 import os
-from atproto import atproto_client
+from atproto import Client
+from .integration_manager import register_integration
 
 # Load environment variables from .env file
 load_dotenv()
@@ -12,11 +13,12 @@ author_handle = "toinelay.bsky.social"
 BSKY_PSWD = os.getenv("BSKY_PSWD")
 
 # Initialize the client
-client = atproto_client.Client()
+client = Client()
 client.login('willz-fps.bsky.social', BSKY_PSWD)
 
-# Function to fetch the latest Bluesky post
-def get_latest_bsky_post():
+@register_integration("bluesky")
+def fetch_latest_post():
+    """Fetch the latest Bluesky post."""
     response = client.get_author_feed(author_handle, limit=1)
     first_post = response.feed[0].post  # Access the first post
 
