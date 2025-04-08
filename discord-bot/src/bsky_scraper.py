@@ -24,12 +24,17 @@ first_post = response.feed[0].post  # Access the first post
 # Get post text
 post_text = first_post.record.text
 
-# Get post image (if available)
+# Get post image
 post_image = None
 if hasattr(first_post.record, "embed") and hasattr(first_post.record.embed, "images"):
     post_image = first_post.record.embed.images[0].image.ref.link  # Access the image reference
 
-# Print the post details (for debugging)
-print(f"Post Text: {post_text}")
+# Construct the full image URL
+post_image_url = None
 if post_image:
-    print(f"Post Image: {post_image}")
+    post_image_url = f"https://cdn.bsky.app/img/feed_fullsize/plain/{post_image}"
+
+# Print the post details
+print(f"Post Text: {post_text}")
+if post_image_url:
+    print(f"Post Image URL: {post_image_url}")
