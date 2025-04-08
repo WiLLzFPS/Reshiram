@@ -24,21 +24,13 @@ class Client(discord.Client):
             # Fetch the latest Bluesky post
             try:
                 post_text, post_url = get_latest_bsky_post()
-
-                # Create an embed for the post
-                embed = discord.Embed(
-                    title="New Toine Lay Post!",
-                    description=post_text,
-                    color=discord.Color.blue(),
-                    url=post_url  # Embed the link to the Bluesky post
-                )
-
-                # Add the link to the embed
-                embed.add_field(name="View Post", value=f"[Click here to view the post]({post_url})", inline=False)
-
-                # Send the embed to the channel
-                await channel.send(embed=embed)
-
+            
+                # Send the first message with the text "New Toine Lay Post!"
+                await channel.send("New Toine Lay Post!")
+            
+                # Send the Bluesky post URL as a separate message
+                await channel.send(post_url)
+            
             except Exception as e:
                 # Handle errors and send a message to the channel
                 print(f"Error fetching Bluesky post: {e}")
