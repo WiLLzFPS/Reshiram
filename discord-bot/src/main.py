@@ -4,7 +4,7 @@ from dotenv import load_dotenv  # type: ignore
 from integrations.integration_manager import get_integration
 
 # Import all integrations to ensure they are registered
-import integrations.bluesky 
+import integrations.bluesky
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,6 +30,11 @@ class Client(discord.Client):
                 integration_name = "bluesky"
                 fetch_post = get_integration(integration_name)
                 post_text, post_url = fetch_post()
+
+                # Check if there's a new post
+                if post_text is None or post_url is None:
+                    print("No new post to send.")
+                    return
 
                 # Send the first message with the text "New Post!"
                 await channel.send("New Post!")
