@@ -15,26 +15,22 @@ BSKY_PSWD = os.getenv("BSKY_PSWD")
 client = atproto_client.Client()
 client.login('willz-fps.bsky.social', BSKY_PSWD)
 
-# Get all posts but limit to 1
-response = client.get_author_feed(author_handle, limit=1)
+# Function to fetch the latest Bluesky post
+def get_latest_bsky_post():
+    response = client.get_author_feed(author_handle, limit=1)
+    first_post = response.feed[0].post  # Access the first post
 
-# Access the first post in the feed
-first_post = response.feed[0].post  # Access the first post
+    # Get post text
+    post_text = first_post.record.text
 
-# Get post text
-post_text = first_post.record.text
+    # Get the post ID
+    post_id = first_post.uri.split("/")[-1]  # Extract the post ID from the URI
 
-# Get post image
-post_image = None
-if hasattr(first_post.record, "embed") and hasattr(first_post.record.embed, "images"):
-    post_image = first_post.record.embed.images[0].image.ref.link  # Access the image reference
+    # Construct the Bluesky post URL
+    post_url = f"https://bsky.app/profile/{author_handle}/post/{post_id}"
 
-# Construct the full image URL
-post_image_url = None
-if post_image:
-    post_image_url = f"https://cdn.bsky.app/img/feed_fullsize/plain/{post_image}"
+    # Print the post text and URL
+    print(f"Post Text: {post_text}")
+    print(f"Post URL: {post_url}")
 
-# Print the post details
-print(f"Post Text: {post_text}")
-if post_image_url:
-    print(f"Post Image URL: {post_image_url}")
+    return post_text, post_url
