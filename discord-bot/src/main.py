@@ -1,9 +1,15 @@
+import os
 import discord  # type: ignore
 from discord.ext import tasks  # type: ignore
 import requests  # type: ignore
 from bs4 import BeautifulSoup  # type: ignore
+from dotenv import load_dotenv  # type: ignore
 
-from config.token import TOKEN
+# Load environment variables from .env file
+load_dotenv()
+
+# Load the token from an environment variable
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 # Toine Lay card leaks account (Bluesky)
 ToineLayBsky = "https://bsky.app/profile/toinelay.bsky.social"
