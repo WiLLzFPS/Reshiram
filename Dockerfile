@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the src directory and requirements.txt into the container
+COPY discord-bot/src /app/src
+COPY requirements.txt /app/
 
 # Install pip and upgrade it
 RUN pip install --no-cache-dir --upgrade pip
@@ -19,8 +20,11 @@ RUN pip install --no-cache-dir --upgrade pip
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Set PYTHONPATH to include /app
+ENV PYTHONPATH=/app
+
 # Expose port (optional, if needed for debugging or HTTP servers)
 EXPOSE 8000
 
 # Run the bot
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]
